@@ -22,6 +22,7 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
     publish_at = models.DateTimeField(verbose_name="Время публикации", blank=True, default=timezone.now)
+    like_count = models.IntegerField(verbose_name='Счетчик лайков', default=0)
 
     def save(self, **kwargs):
         if not self.publish_at:
@@ -62,3 +63,20 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
+
+class ArticleLike(models.Model):
+    user = models.ForeignKey(get_user_model(), related_name='article_likes', verbose_name='Пользователь', \
+                             on_delete=models.CASCADE)
+    article = models.ForeignKey('webapp.Article', on_delete=models.CASCADE, related_name='likes', verbose_name='Статья')
+
+    def __str__(self):
+        return f'{self.user.username} - {self.article.title}'
+
+    class Meta:
+        verbose_name = 'Лайк статей'
+        verbose_name_plural = 'Лайки статей'
