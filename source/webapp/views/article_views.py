@@ -161,7 +161,7 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
 
 
 class ArticleLikeView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         article = get_object_or_404(Article, pk=kwargs.get('pk'))
         like, created = ArticleLike.objects.get_or_create(article=article, user=request.user)
         if created:
@@ -173,7 +173,7 @@ class ArticleLikeView(LoginRequiredMixin, View):
 
 
 class ArticleUnLikeView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         article = get_object_or_404(Article, pk=kwargs.get('pk'))
         like = get_object_or_404(article.likes, user=request.user)
         like.delete()
