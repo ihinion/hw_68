@@ -39,7 +39,7 @@ async function makeRequest(url, method='GET', data=undefined) {
     let response = await fetch(url, opts);
 
     if (response.ok) {  // нормальный ответ
-        return await response.text();
+        return response;
     } else {            // ошибка
         let error = new Error(response.statusText);
         error.response = response;

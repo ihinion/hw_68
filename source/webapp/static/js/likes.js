@@ -5,8 +5,10 @@ async function onLike(event) {
 
     try {
         let response = await makeRequest(url, 'POST');
+        let data = await response.text();
+        console.log(data);
         const counter = likeBtn.parentElement.getElementsByClassName('counter')[0];
-        counter.innerText = response;
+        counter.innerText = data;
     }
     catch (error) {
         console.log(error)
@@ -25,10 +27,11 @@ async function onUnlike(event) {
 
     try {
         let response = await makeRequest(url, 'DELETE');
-        console.log(response);
+        let data = await response.text();
+        console.log(data);
         const counter = unLikeBtn.parentElement
             .getElementsByClassName('counter')[0];
-        counter.innerText = response;
+        counter.innerText = data;
     }
     catch (error) {
         console.log(error);
