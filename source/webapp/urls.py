@@ -9,6 +9,8 @@ app_name = 'webapp'
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
 
+    path('api/v1/', include('api_v1.urls')),
+
     path('article/', include([
         path('<int:pk>/', include([
             path('', ArticleView.as_view(), name='article_view'),
